@@ -6,6 +6,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { EmailModule } from './email/email.module';
 import { ActivateModule } from './activate/activate.module';
+import { CarModule } from './car/car.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ActivateModule } from './activate/activate.module';
     AuthModule,
     EmailModule,
     ActivateModule,
+    CarModule,
   ],
   controllers: [AppController],
   providers: [AppService],
