@@ -50,7 +50,7 @@ export class AuthService {
     });
 
     if (!userRole) {
-      throw new NotFoundException('Not Found');
+      throw new NotFoundException('Not Found Role');
     }
 
     const hash = await argon.hash(dto.password);
