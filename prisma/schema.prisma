@@ -27,8 +27,8 @@ model User {
 
 model User_Reservation {
   id String @id @default(uuid())
-  userId String @unique
-  reservationId String @unique
+  userId String 
+  reservationId String 
   priceTotal Float
   reservationDate DateTime
 
@@ -49,7 +49,7 @@ model Reservation {
   tours Int
   createdAt DateTime @default(now())
   updateAt DateTime @updatedAt
-  cardId String @unique
+  cardId String
 
   reservation User_Reservation[]
   car       Car             @relation(fields: [cardId], references: [id])
