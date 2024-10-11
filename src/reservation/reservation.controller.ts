@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   Post,
   UseGuards,
@@ -17,6 +18,10 @@ import { ReservationService } from './reservation.service';
 @Controller('reservation')
 export class ReservationController {
   constructor(private readonly reservationService: ReservationService) {}
+  @Get('/all')
+  getAllReservation() {
+    return this.reservationService.getAllReservation();
+  }
 
   @Post('/new')
   createReservation(@Body() dto: createReservationDto) {

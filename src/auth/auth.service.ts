@@ -92,4 +92,21 @@ export class AuthService {
     }
     return this.signToken(user.id);
   }
+
+  async getAllUser() {
+    return this.prisma.user.findMany({
+      orderBy: {
+        email: 'asc',
+      },
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        isActive: true,
+        createdAt: true,
+        updateAt: true,
+      },
+    });
+  }
 }

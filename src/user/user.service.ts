@@ -1,6 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { error } from 'console';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { v4 as uuidv4 } from 'uuid';
 import { userReservationDto } from './dto';
@@ -9,6 +8,14 @@ import { userReservationDto } from './dto';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
+  async getAllUserReservation() {
+    return this.prisma.user_Reservation.findMany({
+      orderBy: {
+        id: 'asc',
+      },
+    });
+  }
+
   async createReservation(dto: userReservationDto, user: User) {
     const id = uuidv4();
     const res = await this.prisma
@@ -16,15 +23,15 @@ export class UserService {
     if (res === 1) {
       return { message: 'User Reservation Created' };
     }
-    throw new error();
+    throw new ForbiddenException('Reservation Id wrong');
   }
 
-  async deleteReservation(user: User, id: string) {
-    const res = await this.prisma
-      .$executeRaw`DELETE FROM  "User_Reservation" WHERE "id" = ${id} AND "userId" ${user.id}`;
-    if (res === 1) {
-      return { message: 'User Reservation Deleted' };
-    }
-    throw new ForbiddenException('Not Found Reservation');
-  }
+  //async deleteReservation(user: User, id: string) {
+  //const res = await this.prisma
+  //  .$executeRaw`DELETE FROM  "User_Reservation" WHERE "id" = ${id} AND "userId" ${user.id}`;
+  //if (res === 1) {
+  // return { message: 'User Reservation Deleted' };
+  //}
+  //throw new ForbiddenException('Not Found Reservation');
+  // }
 }

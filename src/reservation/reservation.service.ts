@@ -45,4 +45,12 @@ export class ReservationService {
     });
     return { message: 'Deleted' };
   }
+
+  async getAllReservation() {
+    return this.prisma.reservation.findMany({
+      orderBy: {
+        name: 'asc',
+      },
+    });
+  }
 }
