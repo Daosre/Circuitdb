@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
 
 export class userReservationDto {
   @IsUUID()
@@ -8,8 +8,4 @@ export class userReservationDto {
   @IsNumber()
   @IsNotEmpty()
   priceTotal: number;
-
-  @IsString()
-  @IsNotEmpty()
-  reservationDate: string;
 }

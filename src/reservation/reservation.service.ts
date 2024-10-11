@@ -1,4 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
+import { User } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { createReservationDto } from './dto';
 
@@ -20,5 +21,28 @@ export class ReservationService {
       },
     });
     return reservation;
+  }
+
+  async deleteReservation(user: User, id: string) {
+    const existingReservation = await this.prisma.reservation.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        reservation: true,
+      },
+    });
+    if (!existingReservation) {
+      throw new ForbiddenException('Not Find Reservation');
+    }
+
+    await this.prisma
+      .$executeRaw`DELETE FROM  "User_Reservation" WHERE "reservationId" = ${existingReservation.id} `;
+    await this.prisma.reservation.delete({
+      where: {
+        id: existingReservation.id,
+      },
+    });
+    return { message: 'Deleted' };
   }
 }
