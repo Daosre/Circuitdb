@@ -30,7 +30,7 @@ model User_Reservation {
   userId String 
   reservationId String 
   priceTotal Float
-  reservationDate DateTime
+  
 
   reservation Reservation @relation(fields: [reservationId], references: [id])
   User User @relation(fields: [userId], references: [id])
@@ -50,6 +50,7 @@ model Reservation {
   createdAt DateTime @default(now())
   updateAt DateTime @updatedAt
   cardId String
+  reservationDate String
 
   reservation User_Reservation[]
   car       Car             @relation(fields: [cardId], references: [id])

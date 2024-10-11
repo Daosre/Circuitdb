@@ -13,9 +13,9 @@ export class UserService {
     const id = uuidv4();
     const data = { ...dto, user };
     const res = await this.prisma
-      .$executeRaw`INSERT INTO "Category" ("id","name") VALUES (${id}, ${data})`;
+      .$executeRaw`INSERT INTO "RESERVATION" ("id","name") VALUES (${id}, ${data})`;
     if (res === 1) {
-      return 'Category created';
+      return 'RESERVATION created';
     }
     throw new error();
   }

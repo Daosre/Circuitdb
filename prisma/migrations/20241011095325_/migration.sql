@@ -21,7 +21,6 @@ CREATE TABLE "User_Reservation" (
     "userId" TEXT NOT NULL,
     "reservationId" TEXT NOT NULL,
     "priceTotal" DOUBLE PRECISION NOT NULL,
-    "reservationDate" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "User_Reservation_pkey" PRIMARY KEY ("id")
 );
@@ -42,6 +41,7 @@ CREATE TABLE "Reservation" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateAt" TIMESTAMP(3) NOT NULL,
     "cardId" TEXT NOT NULL,
+    "reservationDate" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Reservation_pkey" PRIMARY KEY ("id")
 );
@@ -63,13 +63,7 @@ CREATE TABLE "Car" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_Reservation_userId_key" ON "User_Reservation"("userId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_Reservation_reservationId_key" ON "User_Reservation"("reservationId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Reservation_cardId_key" ON "Reservation"("cardId");
+CREATE UNIQUE INDEX "Role_name_key" ON "Role"("name");
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

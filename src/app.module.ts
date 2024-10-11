@@ -8,6 +8,7 @@ import { EmailModule } from './email/email.module';
 import { ActivateModule } from './activate/activate.module';
 import { CarModule } from './car/car.module';
 import { UserModule } from './user/user.module';
+import { ReservationModule } from './reservation/reservation.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UserModule } from './user/user.module';
     ActivateModule,
     CarModule,
     UserModule,
+    ReservationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
