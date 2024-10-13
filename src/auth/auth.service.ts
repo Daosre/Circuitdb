@@ -6,11 +6,12 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { User } from '@prisma/client';
 import * as argon from 'argon2';
 import { EmailService } from 'src/email/email.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { role } from 'src/utils/const';
-import { SignInDto, SignUpDto } from './dto';
+import { requestResetDto, resetPasswordDto, SignInDto, SignUpDto } from './dto';
 import { JwtGuard } from './Guards';
 import { AdminGuard } from './Guards/admin.guard';
 @Injectable()
@@ -22,14 +23,18 @@ export class AuthService {
     private emailService: EmailService,
   ) {}
 
-  async signToken(userId: string): Promise<{ access_token: string }> {
+  async signToken(
+    userId: string,
+    time: string,
+  ): Promise<{ access_token: string }> {
     const payload = {
       sub: userId,
+      time: time,
     };
 
     const secret = this.config.get('JWT_SECRET');
     const token = await this.jwt.signAsync(payload, {
-      expiresIn: '30d',
+      expiresIn: time,
       secret: secret,
     });
     return {
@@ -93,7 +98,7 @@ export class AuthService {
     if (!isValidPassword) {
       throw new ForbiddenException('Invalid credentials');
     }
-    return this.signToken(user.id);
+    return this.signToken(user.id, '30d');
   }
 
   @UseGuards(JwtGuard, AdminGuard)
@@ -134,5 +139,34 @@ export class AuthService {
       },
     });
     return { message: 'Delete with success' };
+  }
+
+  async requestResetPassword(dto: requestResetDto) {
+    const existingEmail = await this.prisma.user.findUnique({
+      where: { email: dto.email },
+      include: {
+        Role: true,
+      },
+    });
+    const jwtToken = await this.signToken(existingEmail.id, '10m');
+    if (existingEmail) {
+      await this.emailService.sendUserResetPassword(
+        existingEmail,
+        jwtToken.access_token,
+      );
+    }
+    return jwtToken;
+  }
+  async resetPassword(dto: resetPasswordDto, user: User) {
+    const newPassword = await argon.hash(dto.password);
+    await this.prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        password: newPassword,
+      },
+    });
+    return 'Password Modified !';
   }
 }

@@ -41,7 +41,7 @@ export class EmailService {
     const emailHtml = `
     <h1>Bonjour ${user.lastName} ${user.firstName},</h1>
     <p> Vous venez de demander à réinitialiser votre mot de passe. Veuillez cliquer sur le lien ci-dessous</p>
-    <a href='${url}>Réinitialiser votre mot de passe</a>
+    <a href='${url}'>Réinitialiser votre mot de passe</a>
     <p> Ce lien est valable que 15 minutes </p> `;
 
     await this.transporter.sendMail({

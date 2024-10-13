@@ -25,13 +25,4 @@ export class UserService {
     }
     throw new ForbiddenException('Reservation Id wrong');
   }
-
-  //async deleteReservation(user: User, id: string) {
-  //const res = await this.prisma
-  //  .$executeRaw`DELETE FROM  "User_Reservation" WHERE "id" = ${id} AND "userId" ${user.id}`;
-  //if (res === 1) {
-  // return { message: 'User Reservation Deleted' };
-  //}
-  //throw new ForbiddenException('Not Found Reservation');
-  // }
 }
