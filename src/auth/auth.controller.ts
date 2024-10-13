@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto, SignUpDto } from './dto';
 import { JwtGuard } from './Guards';
@@ -22,5 +30,11 @@ export class AuthController {
   @Get('/user/all')
   getAllUser() {
     return this.authService.getAllUser();
+  }
+
+  @UseGuards(JwtGuard, AdminGuard)
+  @Delete('/delete/user/:id')
+  deleteUser(@Param('id') id: string) {
+    return this.authService.deleteUser(id);
   }
 }
