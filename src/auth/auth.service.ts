@@ -89,7 +89,7 @@ export class AuthService {
       },
     });
     if (!user) {
-      throw new ForbiddenException('Invalid credentials');
+      throw new ForbiddenException('Invalid email');
     }
     if (user.isActive === false) {
       throw new ForbiddenException('Inactive Account');
@@ -98,7 +98,10 @@ export class AuthService {
     if (!isValidPassword) {
       throw new ForbiddenException('Invalid credentials');
     }
-    return this.signToken(user.id, '30d');
+    return {
+      token: await this.signToken(user.id, '30d'),
+      role: user.Role,
+    };
   }
 
   @UseGuards(JwtGuard, AdminGuard)
