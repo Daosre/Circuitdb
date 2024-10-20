@@ -89,14 +89,14 @@ export class AuthService {
       },
     });
     if (!user) {
-      throw new ForbiddenException('Invalid email');
+      throw new ForbiddenException('Email non valide');
     }
     if (user.isActive === false) {
-      throw new ForbiddenException('Inactive Account');
+      throw new ForbiddenException('Compte désactiver');
     }
     const isValidPassword = await argon.verify(user.password, dto.password);
     if (!isValidPassword) {
-      throw new ForbiddenException('Invalid credentials');
+      throw new ForbiddenException('Information invalides ');
     }
     return {
       token: await this.signToken(user.id, '30d'),
