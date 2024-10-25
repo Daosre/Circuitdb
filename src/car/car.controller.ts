@@ -8,12 +8,10 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { AdminGuard } from 'src/auth/Guards/admin.guard';
 import { CarService } from './car.service';
 import { CreateCarDto, UpdateCarDto } from './dto';
-import { AdminGuard } from 'src/auth/Guards/admin.guard';
-import { JwtGuard } from 'src/auth/Guards';
 
-@UseGuards(JwtGuard)
 @Controller('car')
 export class CarController {
   constructor(private readonly carService: CarService) {}
