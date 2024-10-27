@@ -8,11 +8,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Response } from 'express';
 import { createReadStream, existsSync } from 'fs';
 import { diskStorage } from 'multer';
 import { extname, join } from 'path';
 import { ImageService } from './image.service';
-import { Response } from 'express';
 
 @Controller('image')
 export class ImageController {
@@ -33,6 +33,8 @@ export class ImageController {
     }),
   )
   uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log(file);
+
     return { file: file.filename };
   }
 
