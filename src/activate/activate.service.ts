@@ -30,9 +30,6 @@ export class ActivateService {
       },
     });
 
-    return [
-      'account activate',
-      res.redirect('http://localhost:3001/auth/SignIn'),
-    ];
+    return ['account activate', res.redirect('http://localhost:3001/SignIn')];
   }
 }
