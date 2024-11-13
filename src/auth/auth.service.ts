@@ -96,7 +96,7 @@ export class AuthService {
     }
     const isValidPassword = await argon.verify(user.password, dto.password);
     if (!isValidPassword) {
-      throw new ForbiddenException('Information invalides ');
+      throw new ForbiddenException('Information invalides');
     }
     return {
       token: await this.signToken(user.id, '30d'),
