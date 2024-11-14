@@ -17,7 +17,7 @@ export class CreateCarDto {
 
   @IsString()
   @MinLength(10)
-  @MaxLength(255)
+  @MaxLength(2000)
   @IsNotEmpty()
   description: string;
 
