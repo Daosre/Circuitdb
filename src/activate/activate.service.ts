@@ -30,6 +30,11 @@ export class ActivateService {
       },
     });
 
-    return ['account activate', res.redirect('http://localhost:3001/SignIn')];
+    return [
+      'account activate',
+      res.redirect(
+        'https://circuitdubonheur-366a75058d05.herokuapp.com/SignIn',
+      ),
+    ];
   }
 }
