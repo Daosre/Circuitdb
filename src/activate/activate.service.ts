@@ -32,9 +32,7 @@ export class ActivateService {
 
     return [
       'account activate',
-      res.redirect(
-        'https://circuitdubonheur-366a75058d05.herokuapp.com/SignIn',
-      ),
+      res.redirect('https://circuitdbf.vercel.app/SignIn'),
     ];
   }
 }
