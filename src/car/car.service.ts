@@ -39,7 +39,7 @@ export class CarService {
       },
     });
     if (!existingCar || !existingCar) {
-      throw new ForbiddenException('Unexciting id');
+      throw new ForbiddenException('Unexisting id');
     }
     await this.prisma.car.update({
       where: {
@@ -59,7 +59,7 @@ export class CarService {
       },
     });
     if (!existingCar || !existingCar.id) {
-      throw new ForbiddenException('Unexciting Id');
+      throw new ForbiddenException('Unexisting Id');
     }
     await this.prisma.car.delete({
       where: {

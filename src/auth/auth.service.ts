@@ -94,7 +94,9 @@ export class AuthService {
     if (user.isActive === false) {
       throw new ForbiddenException('Compte désactiver');
     }
+    
     const isValidPassword = await argon.verify(user.password, dto.password);
+
     if (!isValidPassword) {
       throw new ForbiddenException('Information invalides');
     }
